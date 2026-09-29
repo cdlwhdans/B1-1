@@ -1,0 +1,62 @@
+:root {
+    color-scheme: light;
+
+    --background: #F0F0F5;
+    --foreground: #6B6C76;
+    --card: #F8F8FB;
+    --card-foreground: #6B6C76;
+    --muted-foreground: #6B6C76;
+    --border: #DDDEE3;
+    --primary: #7C85C7;
+    --primary-foreground: #000000;
+    --secondary: #878A9C;
+    --secondary-foreground: #000000;
+    --accent: #5863B6;
+    --accent-foreground: #FFFFFF;
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 1rem;
+    --space-4: 1.5rem;
+    --space-5: 2rem;
+    --space-6: 3rem;
+
+    --content-width: 72rem;
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+
+    --background: #1F202E;
+    --foreground: #959597;
+    --card: #2C2D3B;
+    --card-foreground: #959597;
+    --muted-foreground: #89898D;
+    --border: #30303D;
+    --primary: #858ED1;
+    --primary-foreground: #000000;
+    --secondary: #C8CBDF;
+    --secondary-foreground: #000000;
+    --accent: #6672C6;
+    --accent-foreground: #000000;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: "Noto Sans KR", sans-serif;
+    line-height: 1.6;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
