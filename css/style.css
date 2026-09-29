@@ -104,7 +104,8 @@ header nav ul.is-open {
 #hero a,
 #contact button,
 .menu-toggle,
-.theme-toggle {
+.theme-toggle,
+.retry-button {
     padding: var(--space-2) var(--space-3);
     border: 0;
     border-radius: 0.5rem;
@@ -123,7 +124,8 @@ header nav ul.is-open {
 #hero a:hover,
 #contact button:hover,
 .menu-toggle:hover,
-.theme-toggle:hover {
+.theme-toggle:hover,
+.retry-button:hover {
     transform: translateY(-2px);
 }
 
@@ -176,6 +178,7 @@ header nav ul.is-open {
     #contact button,
     .menu-toggle,
     .theme-toggle,
+    .retry-button,
     #project-list article {
         transition: none;
     }
