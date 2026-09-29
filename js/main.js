@@ -2,6 +2,9 @@ const menuToggle = document.querySelector(".menu-toggle");
 const siteMenu = document.querySelector("#site-menu");
 const themeToggle = document.querySelector(".theme-toggle");
 const projectList = document.querySelector("#project-list");
+const pageHeader = document.querySelector("header");
+const scrollTopButton = document.querySelector("#scroll-top");
+const sections = document.querySelectorAll("main > section");
 
 menuToggle.addEventListener("click", () => {
     const isOpen = siteMenu.classList.toggle("is-open");
@@ -84,3 +87,30 @@ async function loadProjects() {
 }
 
 loadProjects();
+
+function updateScrollUI() {
+    pageHeader.classList.toggle("is-scrolled", window.scrollY >= 60);
+    scrollTopButton.classList.toggle("is-visible", window.scrollY >= 300);
+
+    const screenCenter = window.innerHeight / 2;
+
+    sections.forEach((section) => {
+        const { top, bottom } = section.getBoundingClientRect();
+        const isActive = top <= screenCenter && bottom > screenCenter;
+
+        section.classList.toggle("is-active", isActive);
+    });
+}
+
+window.addEventListener("scroll", updateScrollUI, { passive: true });
+window.addEventListener("resize", updateScrollUI);
+updateScrollUI();
+
+scrollTopButton.addEventListener("click", () => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    window.scrollTo({
+        top: 0,
+        behavior: reduceMotion ? "auto" : "smooth"
+    });
+});

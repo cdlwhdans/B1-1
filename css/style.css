@@ -50,6 +50,10 @@ html[data-theme="dark"] {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     background-color: var(--background);
@@ -72,6 +76,37 @@ footer {
 
 main > section {
     padding-block: var(--space-6);
+    scroll-margin-top: 5rem;
+}
+
+main > section.is-active {
+    animation: section-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes section-rise {
+    from {
+        opacity: 0.65;
+        transform: translateY(1rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--background);
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+header.is-scrolled {
+    background: var(--card);
+    border-color: var(--border);
 }
 
 header nav {
@@ -149,6 +184,25 @@ header nav ul.is-open {
     transform: translateY(-2px);
 }
 
+#scroll-top {
+    display: none;
+    position: fixed;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    z-index: 10;
+    padding: var(--space-2) var(--space-3);
+    border: 0;
+    border-radius: 0.5rem;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font: inherit;
+    cursor: pointer;
+}
+
+#scroll-top.is-visible {
+    display: block;
+}
+
 @media (min-width: 768px) {
     .menu-toggle {
         display: none;
@@ -174,6 +228,12 @@ header nav ul.is-open {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    header,
+    main > section,
     #hero a,
     #contact button,
     .menu-toggle,
@@ -181,5 +241,11 @@ header nav ul.is-open {
     .retry-button,
     #project-list article {
         transition: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    main > section.is-active {
+        animation: none;
     }
 }
