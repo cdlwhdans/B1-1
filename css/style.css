@@ -22,6 +22,9 @@
     --space-6: 3rem;
 
     --content-width: 72rem;
+
+    --font-family: "Noto Sans KR", sans-serif;
+    font-family: var(--font-family);
 }
 
 html[data-theme="dark"] {
@@ -51,7 +54,6 @@ body {
     margin: 0;
     background-color: var(--background);
     color: var(--foreground);
-    font-family: "Noto Sans KR", sans-serif;
     line-height: 1.6;
 }
 
@@ -59,4 +61,115 @@ img {
     display: block;
     max-width: 100%;
     height: auto;
+}
+
+/* 공통 레이아웃 */
+header nav,
+main > section,
+footer {
+    width: min(calc(100% - 2rem), var(--content-width));
+    margin-inline: auto;
+}
+
+main > section {
+    padding-block: var(--space-6);
+}
+
+/* 모바일 네비게이션 */
+header nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+}
+
+.menu-toggle {
+    margin-left: auto;
+}
+
+header nav ul {
+    display: none;
+    flex-basis: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header nav ul.is-open {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+#hero a,
+#contact button,
+.menu-toggle {
+    padding: var(--space-2) var(--space-3);
+    border: 0;
+    border-radius: 0.5rem;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+#hero a {
+    display: inline-block;
+}
+
+#hero a:hover,
+#contact button:hover,
+.menu-toggle:hover {
+    transform: translateY(-2px);
+}
+
+#project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-3);
+}
+
+#project-list article {
+    padding: var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--card);
+    color: var(--card-foreground);
+    box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+#project-list article:hover {
+    transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+    .menu-toggle {
+        display: none;
+    }
+
+    header nav ul {
+        display: flex;
+        flex-basis: auto;
+        gap: var(--space-3);
+        margin-left: auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    main > section {
+        padding-block: 4rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #hero a,
+    #contact button,
+    .menu-toggle,
+    #project-list article {
+        transition: none;
+    }
 }
