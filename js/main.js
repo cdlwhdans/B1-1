@@ -5,15 +5,37 @@ const projectList = document.querySelector("#project-list");
 const pageHeader = document.querySelector("header");
 const scrollTopButton = document.querySelector("#scroll-top");
 const sections = document.querySelectorAll("main > section");
+const contactForm = document.querySelector("#contact-form");
+const formFields = contactForm.querySelectorAll("input, textarea");
+const formStatus = document.querySelector("#form-status");
+
+function setMenuOpen(isOpen) {
+    siteMenu.classList.toggle("is-open", isOpen);
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "메뉴 닫기" : "메뉴 열기");
+}
 
 menuToggle.addEventListener("click", () => {
-    const isOpen = siteMenu.classList.toggle("is-open");
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    setMenuOpen(!siteMenu.classList.contains("is-open"));
+});
+
+siteMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setMenuOpen(false));
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && siteMenu.classList.contains("is-open")) {
+        setMenuOpen(false);
+        menuToggle.focus();
+    }
 });
 
 function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
-    themeToggle.textContent = theme === "dark" ? "라이트 모드" : "다크 모드";
+    themeToggle.setAttribute(
+        "aria-label",
+        theme === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환"
+    );
 }
 
 const savedTheme = localStorage.getItem("theme");
@@ -64,8 +86,8 @@ async function loadProjects() {
                 <article>
                     <h3>${escapeHtml(name)}</h3>
                     <p>${escapeHtml(description || "설명이 없습니다.")}</p>
-                    <a href="${repoUrl}" target="_blank" rel="noopener noreferrer">
-                        GitHub에서 보기
+                    <a class="text-link" href="${repoUrl}" target="_blank" rel="noopener noreferrer">
+                        GitHub에서 보기 <span class="icon icon-arrow-diagonal" aria-hidden="true"></span>
                     </a>
                 </article>
             `;
@@ -74,9 +96,9 @@ async function loadProjects() {
         console.error(error);
 
         projectList.innerHTML = `
-            <div>
+            <div class="project-state">
                 <p role="alert">프로젝트를 불러올 수 없습니다.</p>
-                <button class="retry-button" type="button">다시 시도</button>
+                <button class="retry-button button button-primary" type="button">다시 시도</button>
             </div>
         `;
 
@@ -115,10 +137,6 @@ scrollTopButton.addEventListener("click", () => {
     });
 });
 
-
-const contactForm = document.querySelector("#contact-form");
-const formFields = contactForm.querySelectorAll("input, textarea");
-const formStatus = document.querySelector("#form-status");
 
 let hasSubmitted = false;
 
