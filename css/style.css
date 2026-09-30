@@ -1,3 +1,5 @@
+/* CSS 변수: 색상/폰트/간격을 공통 이름으로 정의하고 var()로 재사용.
+ * 반복 값을 일관되게 관리하고 테마 변경 시 여러 요소에 함께 반영하기 위해 사용. */
 :root {
     color-scheme: light;
     --background: #F0F0F5;
@@ -26,6 +28,8 @@
     font-family: var(--font-family);
 }
 
+/* 다크 모드 변수: data-theme=dark일 때 같은 색상 변수들을 덮어씀.
+ * JS renderTheme가 html의 속성을 바꾸면 전체 테마에 반영. */
 html[data-theme="dark"] {
     color-scheme: dark;
     --background: #1F202E;
@@ -44,127 +48,662 @@ html[data-theme="dark"] {
     --error: #FDA29B;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--background); color: var(--foreground); line-height: 1.8; }
-button, input, textarea { font: inherit; }
-button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; }
-img { display: block; max-width: 100%; height: auto; }
-h1, h2, h3, p { margin: 0; }
-h1, h2, h3 { color: var(--heading); }
-:focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
-::selection { background: var(--primary); color: var(--primary-foreground); }
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 부드러운 스크롤: 네비게이션 앵커 이동에 smooth 적용. */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    line-height: 1.8;
+}
+
+button, input, textarea {
+    font: inherit;
+}
+
+button, a, input, textarea {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+}
+
+h1, h2, h3 {
+    color: var(--heading);
+}
+
+:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 4px;
+}
+
+::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
 
 header nav, main > section, footer {
     width: min(calc(100% - 2.5rem), var(--content-width));
     margin-inline: auto;
 }
-main > section { padding-block: var(--space-7); scroll-margin-top: 5.5rem; border-bottom: 1px solid var(--border); }
-.section-content { min-width: 0; }
-main > section.is-active > .section-content { animation: section-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1); }
-@keyframes section-rise { from { opacity: 0.65; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
-.skip-link { position: fixed; top: -6rem; left: var(--space-3); z-index: 30; padding: var(--space-2) var(--space-3); background: var(--card); color: var(--heading); }
-.skip-link:focus { top: var(--space-3); }
 
-header { position: sticky; top: 0; z-index: 10; background: var(--background); border-bottom: 1px solid transparent; transition: background-color 0.2s ease, border-color 0.2s ease; }
-header.is-scrolled { background: var(--card); border-color: var(--border); }
-header nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); padding-block: var(--space-3); }
-.site-logo { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.06em; color: var(--heading); }
-.site-logo span { color: var(--accent); }
-.menu-toggle { margin-left: auto; }
-header nav ul { order: 1; display: none; flex-basis: 100%; margin: 0; padding: var(--space-2) 0; list-style: none; }
-header nav ul.is-open { display: flex; flex-direction: column; gap: var(--space-1); }
-header nav ul a { display: flex; align-items: center; min-height: 44px; padding-inline: var(--space-3); border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; transition: color 0.2s ease, background-color 0.2s ease; }
+main > section {
+    padding-block: var(--space-7);
+    scroll-margin-top: 5.5rem;
+    border-bottom: 1px solid var(--border);
+}
 
-.icon { display: inline-block; flex: 0 0 auto; width: 1.25rem; height: 1.25rem; background-color: currentColor; mask: var(--icon-url) center / contain no-repeat; -webkit-mask: var(--icon-url) center / contain no-repeat; }
-.icon-menu { --icon-url: url("../images/menu.svg"); }
-.menu-toggle[aria-expanded="true"] .icon-menu { --icon-url: url("../images/close.svg"); }
-.icon-theme { --icon-url: url("../images/moon.svg"); }
-html[data-theme="dark"] .icon-theme { --icon-url: url("../images/sun.svg"); }
-.icon-arrow-right { --icon-url: url("../images/arrow-right.svg"); }
-.icon-arrow-diagonal { --icon-url: url("../images/arrow-diagonal.svg"); }
-.icon-arrow-up { --icon-url: url("../images/arrow-up.svg"); }
-.icon-button { display: inline-flex; justify-content: center; align-items: center; flex-shrink: 0; width: 44px; height: 44px; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--card); color: var(--heading); transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
+.section-content {
+    min-width: 0;
+}
 
-.eyebrow { display: flex; align-items: center; gap: var(--space-2); color: var(--muted-foreground); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; }
-.accent-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--accent); }
-#hero { padding-top: var(--space-7); padding-bottom: var(--space-4); }
-.hero-content { display: flex; flex-direction: column; min-height: 65svh; }
-#hero h1 { margin-top: var(--space-5); font-size: clamp(2.75rem, 7vw, 5.75rem); font-weight: 800; line-height: 1.25; letter-spacing: -0.065em; overflow-wrap: anywhere; }
-#hero h1 span { color: var(--accent); }
-html[data-theme="dark"] #hero h1 span { color: var(--primary); }
-.hero-description { margin-top: var(--space-4); font-size: 1rem; }
-.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); margin-top: var(--space-6); margin-bottom: var(--space-7); }
-.button { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-3); min-height: 48px; padding: 0.75rem var(--space-4); border: 1px solid transparent; border-radius: 0.75rem; font-size: 0.875rem; font-weight: 600; transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
-.button-primary { background: var(--primary); color: var(--primary-foreground); }
-.text-link { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; font-size: 0.875rem; font-weight: 500; color: var(--heading); transition: color 0.2s ease; }
-.text-link .icon { width: 1rem; height: 1rem; }
-.hero-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2); margin-top: auto; padding-top: var(--space-4); font-size: 0.6875rem; letter-spacing: 0.04em; color: var(--muted-foreground); }
-.section-heading { margin-bottom: var(--space-6); }
-.section-heading h2 { margin-top: var(--space-2); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.4; font-weight: 700; letter-spacing: -0.05em; }
+/* 스크롤 애니메이션: 화면 중앙의 section만 활성화. 측정은 section, 움직임은 내부 콘텐츠로 분리.
+ * 현재 구현은 IntersectionObserver 대신 scroll 이벤트 사용. 변경 기준은 README에 명시. */
+main > section.is-active > .section-content {
+    animation: section-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
-.about-layout { display: grid; gap: var(--space-6); }
-.profile-card { display: flex; flex-direction: column; align-items: center; padding: var(--space-6); border: 1px solid var(--border); border-radius: 1rem; background: var(--card); }
-.profile-image { width: 10rem; aspect-ratio: 1; object-fit: cover; border-radius: 50%; }
-.profile-name { margin-top: var(--space-4); color: var(--heading); font-size: 1.125rem; font-weight: 700; }
-.about-description { align-self: center; }
-.about-description h3 { margin-bottom: var(--space-4); font-size: 1.25rem; font-weight: 600; letter-spacing: -0.03em; }
-.about-description p + p { margin-top: var(--space-3); }
-.skill-list { display: flex; flex-wrap: wrap; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
-.skill-list li { padding: 0.75rem var(--space-4); border: 1px solid var(--border); border-radius: 0.75rem; background: var(--card); color: var(--heading); font-size: 0.9375rem; font-weight: 500; }
+@keyframes section-rise {
 
-#project-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: var(--space-4); }
-#project-list article { display: flex; flex-direction: column; min-width: 0; min-height: 15rem; padding: var(--space-4); border: 1px solid var(--border); border-radius: 1rem; background: var(--card); color: var(--card-foreground); overflow-wrap: anywhere; box-shadow: 0 2px 6px rgb(0 0 0 / 0.025); transition: transform 0.2s ease, border-color 0.2s ease; }
-#project-list article h3 { font-size: 1.125rem; line-height: 1.5; font-weight: 600; letter-spacing: -0.025em; }
-#project-list article p { margin-top: var(--space-3); margin-bottom: var(--space-4); font-size: 0.875rem; }
-#project-list article a { align-self: flex-start; margin-top: auto; }
-#project-list > p, #project-list > .project-state { grid-column: 1 / -1; padding: var(--space-6); border: 1px dashed var(--border); border-radius: 1rem; text-align: center; }
-.project-state .retry-button { margin-top: var(--space-4); }
+from {
+    opacity: 0.65;
+    transform: translateY(1rem);
+}
 
-.contact-layout { display: grid; gap: var(--space-6); }
-.contact-intro > p { font-size: 0.9375rem; }
-.contact-intro .form-note { margin-top: var(--space-3); font-size: 0.8125rem; }
-#contact-form { display: grid; gap: var(--space-4); min-width: 0; padding: var(--space-4); border: 1px solid var(--border); border-radius: 1rem; background: var(--card); }
-#contact-form label { display: block; margin-bottom: var(--space-2); color: var(--heading); font-size: 0.875rem; font-weight: 500; }
-#contact-form input, #contact-form textarea { width: 100%; min-height: 48px; padding: 0.75rem var(--space-3); border: 1px solid var(--border); border-radius: 0.625rem; background: var(--background); color: var(--heading); font-size: 0.9375rem; transition: border-color 0.2s ease; }
-#contact-form input::placeholder, #contact-form textarea::placeholder { color: var(--muted-foreground); opacity: 1; }
-#contact-form textarea { min-height: 10rem; resize: vertical; }
-#contact-form [aria-invalid="true"] { border-color: var(--error); }
-.field-error { margin-top: var(--space-1); color: var(--error); font-size: 0.8125rem; }
-.field-error:empty, #form-status:empty { display: none; }
-#form-status { color: var(--heading); font-size: 0.875rem; }
-#contact-form button { justify-self: start; }
-footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); padding-block: var(--space-5); font-size: 0.8125rem; }
-#scroll-top { display: none; position: fixed; right: var(--space-4); bottom: var(--space-4); z-index: 10; }
-#scroll-top.is-visible { display: inline-flex; }
+to {
+    opacity: 1;
+    transform: translateY(0);
+} }
+
+.skip-link {
+    position: fixed;
+    top: -6rem;
+    left: var(--space-3);
+    z-index: 30;
+    padding: var(--space-2) var(--space-3);
+    background: var(--card);
+    color: var(--heading);
+}
+
+.skip-link:focus {
+    top: var(--space-3);
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--background);
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* 네비게이션 배경 변경: JS가 60px 이상에서 is-scrolled 클래스를 적용. */
+header.is-scrolled {
+    background: var(--card);
+    border-color: var(--border);
+}
+
+/* Flexbox 선택 이유: 로고, 메뉴, 버튼을 한 방향으로 정렬하고 남는 공간을 배분.
+ * Grid와 달리 행/열 격자보다 한 방향 정렬이 중심인 영역에 사용. */
+header nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    padding-block: var(--space-3);
+}
+
+.site-logo {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    color: var(--heading);
+}
+
+.site-logo span {
+    color: var(--accent);
+}
+
+.menu-toggle {
+    margin-left: auto;
+}
+
+/* 모바일 기본 메뉴: 숨김. is-open 클래스가 추가되면 표시. */
+header nav ul {
+    order: 1;
+    display: none;
+    flex-basis: 100%;
+    margin: 0;
+    padding: var(--space-2) 0;
+    list-style: none;
+}
+
+/* 모바일 메뉴 토글: STATE.menuOpen을 renderMenu에서 클래스에 반영하여 메뉴 표시/숨김. */
+header nav ul.is-open {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+header nav ul a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--space-3);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.icon {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: currentColor;
+    mask: var(--icon-url) center / contain no-repeat;
+    -webkit-mask: var(--icon-url) center / contain no-repeat;
+}
+
+.icon-menu {
+    --icon-url: url("../images/menu.svg");
+}
+
+.menu-toggle[aria-expanded="true"] .icon-menu {
+    --icon-url: url("../images/close.svg");
+}
+
+.icon-theme {
+    --icon-url: url("../images/moon.svg");
+}
+
+html[data-theme="dark"] .icon-theme {
+    --icon-url: url("../images/sun.svg");
+}
+
+.icon-arrow-right {
+    --icon-url: url("../images/arrow-right.svg");
+}
+
+.icon-arrow-diagonal {
+    --icon-url: url("../images/arrow-diagonal.svg");
+}
+
+.icon-arrow-up {
+    --icon-url: url("../images/arrow-up.svg");
+}
+
+.icon-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--heading);
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+}
+
+.accent-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+#hero {
+    padding-top: var(--space-7);
+    padding-bottom: var(--space-4);
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 65svh;
+}
+
+#hero h1 {
+    margin-top: var(--space-5);
+    font-size: clamp(2.75rem, 7vw, 5.75rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.065em;
+    overflow-wrap: anywhere;
+}
+
+#hero h1 span {
+    color: var(--accent);
+}
+
+html[data-theme="dark"] #hero h1 span {
+    color: var(--primary);
+}
+
+.hero-description {
+    margin-top: var(--space-4);
+    font-size: 1rem;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-7);
+}
+
+/* 버튼 요구사항: transition으로 hover 시 스타일 변화를 부드럽게 처리. */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    min-height: 48px;
+    padding: 0.75rem var(--space-4);
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+.text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--heading);
+    transition: color 0.2s ease;
+}
+
+.text-link .icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.hero-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-top: auto;
+    padding-top: var(--space-4);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+}
+
+.section-heading {
+    margin-bottom: var(--space-6);
+}
+
+.section-heading h2 {
+    margin-top: var(--space-2);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.4;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+}
+
+.about-layout {
+    display: grid;
+    gap: var(--space-6);
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-6);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--card);
+}
+
+.profile-image {
+    width: 10rem;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-name {
+    margin-top: var(--space-4);
+    color: var(--heading);
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.about-description {
+    align-self: center;
+}
+
+.about-description h3 {
+    margin-bottom: var(--space-4);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+}
+
+.about-description p + p {
+    margin-top: var(--space-3);
+}
+
+.skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.skill-list li {
+    padding: 0.75rem var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--card);
+    color: var(--heading);
+    font-size: 0.9375rem;
+    font-weight: 500;
+}
+
+/* Grid 선택 이유: 프로젝트 카드들을 행과 열로 정렬.
+ * auto-fit은 공간에 들어가는 열 수를 결정하고, minmax는 열 너비 범위를 설정.
+ * min(100%,18rem)으로 좁은 화면의 넘침을 방지하고 1fr로 남는 공간을 분배. */
+#project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-4);
+}
+
+/* 카드 요구사항: box-shadow 적용. transition으로 hover 이동/테두리 변화를 부드럽게 처리. */
+#project-list article {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 15rem;
+    padding: var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--card);
+    color: var(--card-foreground);
+    overflow-wrap: anywhere;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.025);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+#project-list article h3 {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+#project-list article p {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-4);
+    font-size: 0.875rem;
+}
+
+#project-list article a {
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+#project-list > p, #project-list > .project-state {
+    grid-column: 1 / -1;
+    padding: var(--space-6);
+    border: 1px dashed var(--border);
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.project-state .retry-button {
+    margin-top: var(--space-4);
+}
+
+.contact-layout {
+    display: grid;
+    gap: var(--space-6);
+}
+
+.contact-intro > p {
+    font-size: 0.9375rem;
+}
+
+.contact-intro .form-note {
+    margin-top: var(--space-3);
+    font-size: 0.8125rem;
+}
+
+#contact-form {
+    display: grid;
+    gap: var(--space-4);
+    min-width: 0;
+    padding: var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--card);
+}
+
+#contact-form label {
+    display: block;
+    margin-bottom: var(--space-2);
+    color: var(--heading);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+#contact-form input, #contact-form textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: 0.625rem;
+    background: var(--background);
+    color: var(--heading);
+    font-size: 0.9375rem;
+    transition: border-color 0.2s ease;
+}
+
+#contact-form input::placeholder, #contact-form textarea::placeholder {
+    color: var(--muted-foreground);
+    opacity: 1;
+}
+
+#contact-form textarea {
+    min-height: 10rem;
+    resize: vertical;
+}
+
+/* 폼 오류 상태: renderForm이 aria-invalid를 갱신하면 오류 테두리 표시. */
+#contact-form [aria-invalid="true"] {
+    border-color: var(--error);
+}
+
+.field-error {
+    margin-top: var(--space-1);
+    color: var(--error);
+    font-size: 0.8125rem;
+}
+
+.field-error:empty, #form-status:empty {
+    display: none;
+}
+
+#form-status {
+    color: var(--heading);
+    font-size: 0.875rem;
+}
+
+#contact-form button {
+    justify-self: start;
+}
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-5);
+    font-size: 0.8125rem;
+}
+
+#scroll-top {
+    display: none;
+    position: fixed;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    z-index: 10;
+}
+
+/* 스크롤 탑 버튼: JS가 300px 이상에서 is-visible 클래스를 적용. */
+#scroll-top.is-visible {
+    display: inline-flex;
+}
 
 @media (hover: hover) {
-    header nav ul a:hover { color: var(--heading); background: var(--background); }
-    .button:hover, .icon-button:hover { transform: translateY(-2px); border-color: var(--primary); }
-    .text-link:hover { color: var(--accent); }
-    #project-list article:hover { transform: translateY(-4px); border-color: var(--primary); }
+
+header nav ul a:hover {
+    color: var(--heading);
+    background: var(--background);
 }
 
+/* 버튼 hover 효과. 같은 공통 규칙을 CTA와 아이콘 버튼에 적용. */
+.button:hover, .icon-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.text-link:hover {
+    color: var(--accent);
+}
+
+/* 프로젝트 카드 hover 효과. */
+#project-list article:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+}
+}
+
+/* 모바일 퍼스트: 좁은 화면 스타일을 기본으로 두고 min-width로 큰 화면을 확장.
+ * 단일 열/숨긴 메뉴를 기본으로 작성하고 768px 이상에서 가로 메뉴와 두 열 배치 추가. */
 @media (min-width: 768px) {
-    header nav, main > section, footer { width: min(calc(100% - 4rem), var(--content-width)); }
-    .menu-toggle { display: none; }
-    header nav ul, header nav ul.is-open { order: 0; display: flex; flex-direction: row; flex-basis: auto; gap: var(--space-1); margin-left: auto; padding: 0; }
-    .theme-toggle { margin-left: var(--space-3); }
-    .about-layout { grid-template-columns: 16rem minmax(0, 1fr); gap: var(--space-7); }
-    #contact-form { padding: var(--space-5); }
+
+header nav, main > section, footer {
+    width: min(calc(100% - 4rem), var(--content-width));
 }
 
+.menu-toggle {
+    display: none;
+}
+
+header nav ul, header nav ul.is-open {
+    order: 0;
+    display: flex;
+    flex-direction: row;
+    flex-basis: auto;
+    gap: var(--space-1);
+    margin-left: auto;
+    padding: 0;
+}
+
+.theme-toggle {
+    margin-left: var(--space-3);
+}
+
+.about-layout {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: var(--space-7);
+}
+
+#contact-form {
+    padding: var(--space-5);
+}
+}
+
+/* 과제의 데스크톱 브레이크포인트 1024px. 기본 및 768px 규칙 위에 추가 적용. */
 @media (min-width: 1024px) {
-    main > section { padding-block: 6rem; }
-    #hero { padding-top: 6rem; padding-bottom: var(--space-4); }
-    .contact-layout { grid-template-columns: 1fr 1.1fr; gap: var(--space-7); }
-    #project-list article { padding: var(--space-5); }
+
+main > section {
+    padding-block: 6rem;
+}
+
+#hero {
+    padding-top: 6rem;
+    padding-bottom: var(--space-4);
+}
+
+.contact-layout {
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-7);
+}
+
+#project-list article {
+    padding: var(--space-5);
+}
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { transition: none !important; }
-    main > section.is-active > .section-content { animation: none; }
+
+html {
+    scroll-behavior: auto;
+}
+
+*, *::before, *::after {
+    transition: none !important;
+}
+
+main > section.is-active > .section-content {
+    animation: none;
+}
 }
