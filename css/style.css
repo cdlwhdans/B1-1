@@ -249,3 +249,57 @@ header nav ul.is-open {
         animation: none;
     }
 }
+
+:root {
+    --error: #B42318;
+}
+
+html[data-theme="dark"] {
+    --error: #FDA29B;
+}
+
+#contact-form {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 32rem;
+}
+
+#contact-form label {
+    display: block;
+    margin-bottom: var(--space-1);
+}
+
+#contact-form input,
+#contact-form textarea {
+    width: 100%;
+    padding: var(--space-2);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--card);
+    color: var(--card-foreground);
+    font: inherit;
+}
+
+#contact-form textarea {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+#contact-form [aria-invalid="true"] {
+    border-color: var(--error);
+}
+
+.field-error {
+    margin: var(--space-1) 0 0;
+    color: var(--error);
+    font-size: 0.875rem;
+}
+
+.field-error:empty,
+#form-status:empty {
+    display: none;
+}
+
+#contact-form button {
+    justify-self: start;
+}

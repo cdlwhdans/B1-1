@@ -114,3 +114,61 @@ scrollTopButton.addEventListener("click", () => {
         behavior: reduceMotion ? "auto" : "smooth"
     });
 });
+
+
+const contactForm = document.querySelector("#contact-form");
+const formFields = contactForm.querySelectorAll("input, textarea");
+const formStatus = document.querySelector("#form-status");
+
+let hasSubmitted = false;
+
+function validateField(field) {
+    const errorElement = document.querySelector(`#${field.id}-error`);
+    let errorMessage = "";
+
+    if (field.value.trim() === "") {
+        errorMessage = "필수 입력 항목입니다.";
+    } else if (field.type === "email" && field.validity.typeMismatch) {
+        errorMessage = "올바른 이메일 주소를 입력해주세요.";
+    }
+
+    errorElement.textContent = errorMessage;
+    field.setAttribute("aria-invalid", String(errorMessage !== ""));
+
+    return errorMessage === "";
+}
+
+formFields.forEach((field) => {
+    field.addEventListener("input", () => {
+        formStatus.textContent = "";
+
+        if (hasSubmitted) {
+            validateField(field);
+        }
+    });
+});
+
+contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    hasSubmitted = true;
+    formStatus.textContent = "";
+
+    let firstInvalidField = null;
+
+    formFields.forEach((field) => {
+        const isValid = validateField(field);
+
+        if (!isValid && firstInvalidField === null) {
+            firstInvalidField = field;
+        }
+    });
+
+    if (firstInvalidField !== null) {
+        firstInvalidField.focus();
+        return;
+    }
+
+    formStatus.textContent = "입력 내용이 정상적으로 확인되었습니다.";
+});
+
+contactForm.noValidate = true;

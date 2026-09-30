@@ -13,7 +13,7 @@
 <body>
     <header id="top">
         <nav>
-            <a href="#top">Portfolio</a>
+            <a href="#hero">Portfolio</a>
 
             <button
                 class="menu-toggle"
@@ -70,20 +70,43 @@
             <form id="contact-form">
                 <div>
                     <label for="name">이름</label>
-                    <input id="name" name="name" type="text" required>
+                    <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        autocomplete="name"
+                        aria-describedby="name-error"
+                        required
+                    >
+                    <p id="name-error" class="field-error" aria-live="polite"></p>
                 </div>
 
                 <div>
                     <label for="email">이메일</label>
-                    <input id="email" name="email" type="email" required>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        aria-describedby="email-error"
+                        required
+                    >
+                    <p id="email-error" class="field-error" aria-live="polite"></p>
                 </div>
 
                 <div>
                     <label for="message">메시지</label>
-                    <textarea id="message" name="message" required></textarea>
+                    <textarea
+                        id="message"
+                        name="message"
+                        aria-describedby="message-error"
+                        required
+                    ></textarea>
+                    <p id="message-error" class="field-error" aria-live="polite"></p>
                 </div>
 
                 <button type="submit">보내기</button>
+                <p id="form-status" role="status"></p>
             </form>
         </section>
     </main>
